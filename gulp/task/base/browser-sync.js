@@ -4,7 +4,7 @@
 
 //import
 const gulp = require('gulp');
-const browserSync = require('browser-sync');
+const browserSync = require('browser-sync').create();
 const proxy = require('http-proxy-middleware');
 
 const proxyConfig = require('../../config/config.proxy');
@@ -20,9 +20,13 @@ const defaultBS = process.platform === 'darwin' ? 'google chrome' : 'chrome'; //
 gulp.task('browserSync', () => {
     logUtil.i('start browserSync...')
     var browserSyncConfig = getBrowserSyncConfig();
-    var gulpStream = browserSync(browserSyncConfig);
+    var gulpStream = browserSync.init(browserSyncConfig);
     logUtil.i('start browserSync success');
     return gulpStream;
+})
+
+gulp.task('browserSync:reload',()=>{
+    browserSync.reload();
 })
 
 function getBrowserSyncConfig() {

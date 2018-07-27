@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "appStart": "gulp appStart",
-    "dev": "gulp appStart --env dev --m ZHHXMallSys",
-    "test": "gulp appStart --env test --m ZHHXMallSys",
+    "dev": "gulp appStart --env dev --m ZHHXMallCMS",
+    "test": "gulp appStart --env test --m ZHHXMallCMS",
     "build": "gulp build",
     "export": "gulp export"
   },

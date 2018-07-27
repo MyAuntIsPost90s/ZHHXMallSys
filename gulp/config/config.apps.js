@@ -8,7 +8,7 @@ const stringValid = require('../valid/stringValid');
 const objectValid = require('../valid/objectValid');
 
 var modules = [
-    {name: "ZHHXMallSys", path: "/ZHHXMallSys"}
+    {name: "ZHHXMallCMS", path: "/ZHHXMallCMS"}
     , {name: "test", path: "/test"}
 ];
 
