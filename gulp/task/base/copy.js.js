@@ -7,11 +7,13 @@
 //import
 const gulp = require('gulp');
 const plug = require('gulp-load-plugins')();
+const replace = require('gulp-replace');
 const globalConfig = require('../../config/config.global');
 const appConfig = require('../../config/config.apps');
 const argUtil = require('../../util/argUtil');
 const logUtil = require('../../util/logUtil');
 const objectValid = require('../../valid/objectValid');
+const proxyConfig = require('../../config/config.proxy');
 const stringValid = require('../../valid/stringValid');
 
 gulp.task('copyJs:dist', () => {
@@ -59,6 +61,7 @@ function copyJs(source, target) {
     source = globalConfig.getSourceDir(source) + globalConfig.match.JS;
     logUtil.i('begin copy js:' + source);
     var gulpStream = gulp.src(source)
+        .pipe(replace("#UrlHead#",proxyConfig.getProxyHead()))
         .pipe(gulp.dest(target))
     logUtil.i('end copy js:' + target);
     return gulpStream;
@@ -66,9 +69,14 @@ function copyJs(source, target) {
 
 //复制并处理js
 function copyMiniJs(source, target) {
+    var env = argUtil.getEnvArg();
+    if(stringValid.isEmpty(env)){
+        throw new Error('error:--env 环境变量参数不能为空');
+    }
     source = globalConfig.getSourceDir(source) + globalConfig.match.JS;
     logUtil.i('begin copy js:' + source);
     var gulpStream = gulp.src([source, globalConfig.match.IGNORE])
+        .pipe(replace("#UrlHead#",proxyConfig.getProxyHost(env)))
         .pipe(plug.babel())
         .pipe(plug.uglify())
         .pipe(gulp.dest(target))

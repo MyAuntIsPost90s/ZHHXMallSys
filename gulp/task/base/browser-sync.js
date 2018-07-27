@@ -65,7 +65,7 @@ function getMiddleWareConfig() {
         throw new Error('error:转发地址不存在');
     }
     return [  //转发中间件配置
-        proxy('/ZHHXMallGateway', {
+        proxy(proxyConfig.getProxyHead(), {
             target: host,
             changeOrigin: true
         })
